@@ -1,6 +1,8 @@
 const express = require('express')
 const mongoose = require('mongoose') // 載入 mongoose
 
+const Todo = require('./models/todo')
+
 const exphbs = require('express-handlebars')
 
 // 加入這段 code, 僅在非正式環境時, 使用 dotenv
@@ -26,7 +28,11 @@ app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
 app.get('/', (req, res) => {
-  res.render('index')
+  // take all Todo data
+  Todo.find() // 抓所有資料
+    .lean() // 未經處裡的乾淨資料
+    .then(todos => res.render('index', { todos })) // 然後...將todos資訊傳入index畫面
+    .catch(error => console.log(error)) // 抓取到錯誤則顯示錯誤資訊
 })
 
 app.listen(3000, () => {

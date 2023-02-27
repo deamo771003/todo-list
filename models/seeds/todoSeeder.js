@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const Todo = require('../todo') // 載入 todo model
+const Todo = require('../todo') // 載入model/todo
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
