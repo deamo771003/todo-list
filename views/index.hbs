@@ -1,6 +1,9 @@
+{{!-- 超連結 --}}
+<a href="./todos/new">Create</a>
 <ul>
   {{#each todos}}
   <li>
+    {{!-- 因這裡已用each啟動陣列迭代todos，所以下面的this.name是指todos裡的name --}}
     {{ this.name }}
   </li>
   {{/each}}
