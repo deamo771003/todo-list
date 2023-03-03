@@ -5,6 +5,10 @@
   <li>
     {{!-- 因這裡已用each啟動陣列迭代todos，所以下面的this.name是指todos裡的name --}}
     {{ this.name }}
+    {{!-- 詳細資料 _id是Mongoose內的獨立流水ID --}}
+    <a href="./todos/{{ this._id }}">detail</a>
+    {{!-- 修改 依樣使用__id是Mongoose內的獨立流水IDid抓取 --}}
+    <a href="./todos/{{ this._id}}/edit">edit</a>
   </li>
   {{/each}}
 </ul>
