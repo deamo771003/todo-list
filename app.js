@@ -6,7 +6,8 @@ const bodyParser = require('body-parser')
 const Todo = require('./models/todo')
 
 const exphbs = require('express-handlebars')
-const todo = require('./models/todo')
+// const todo = require('./models/todo') // 多key，註解後測試完整性
+const { request } = require('express')
 
 // 加入這段 code, 僅在非正式環境時, 使用 dotenv
 if (process.env.NODE_ENV !== 'production') {
@@ -75,15 +76,23 @@ app.get('/todos/:id/edit', (req, res) => {
 // edit 存取使用者資料
 app.post('/todos/:id/edit', (req, res) => {
   const id = req.params.id
-  const name = req.body.name // name = 使用者key的name
-  return Todo.findById(id)
+  const name = req.body.name // name = 使用者key的name ??
+  return Todo.findById(id) // ??
     .then(todo => {
       todo.name = name // 覆蓋原本todo.name
-      return todo.save() // ??
+      return todo.save() // 執行儲存
     })
-    .then(() => res.redirect(`/todos/${id}`)) // ??
-    .catch(error => console.log(error))
+    .then(() => res.redirect(`/todos/${id}`)) // 以上動作結束後不用任何動作直接導向首頁 
+    .catch(error => console.log(error)) // 以上只要有錯誤則跳錯誤訊息
+})
 
+// delete
+app.post('/todos/:id/delete', (req, res) => {
+  const id = req.params.id
+  return Todo.findById(id)
+    .then(todo => todo.remove())
+    .then(() => res.redirect('/')) // 以上動作結束後不用任何動作直接導向首頁 
+    .catch(error => console.log(error))
 })
 
 app.listen(3000, () => {

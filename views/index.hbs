@@ -8,7 +8,11 @@
     {{!-- 詳細資料 _id是Mongoose內的獨立流水ID --}}
     <a href="./todos/{{ this._id }}">detail</a>
     {{!-- 修改 依樣使用__id是Mongoose內的獨立流水IDid抓取 --}}
-    <a href="./todos/{{ this._id}}/edit">edit</a>
+    <a href="./todos/{{ this._id }}/edit">edit</a>
+    {{!-- 刪除 delete --}}
+    <form action="./todos/{{ this._id }}/delete" method="POST" style="display: inline;">
+      <button type="submit">delete</button>
+    </form>
   </li>
   {{/each}}
 </ul>
