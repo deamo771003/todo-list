@@ -5,8 +5,9 @@ const todoSchema = new Schema({
     type: String,
     required: true
   },
-  done: {
-    type: Boolean
+  isDone: {
+    type: Boolean, // true & false
+    default: false // 預設為false(沒打勾)
   }
 })
 

@@ -76,10 +76,18 @@ app.get('/todos/:id/edit', (req, res) => {
 // edit 存取使用者資料
 app.post('/todos/:id/edit', (req, res) => {
   const id = req.params.id
-  const name = req.body.name // name = 使用者key的name ??
+  // const name = req.body.name // name = 使用者key的name ??
+  // const isDone = req.body.isDone
+  const { name, isDone } = req.body // 解構複值，等於以上語法的縮寫
   return Todo.findById(id) // ??
     .then(todo => {
       todo.name = name // 覆蓋原本todo.name
+      // if (isDone === 'on') {
+      //   todo.isDone = true
+      // } else {
+      //   todo.isDone = false
+      // }
+      todo.isDone = isDone === 'on' // 等於以上if縮寫，因為isDone === 'on'就是true
       return todo.save() // 執行儲存
     })
     .then(() => res.redirect(`/todos/${id}`)) // 以上動作結束後不用任何動作直接導向首頁 
