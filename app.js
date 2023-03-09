@@ -38,6 +38,7 @@ app.get('/', (req, res) => {
   // take all Todo data
   Todo.find() // 抓所有資料
     .lean() // 未經處裡的乾淨資料
+    .sort({ _id: 'asc' }) // 資料排序功能，使用_id來排序
     .then(todos => res.render('index', { todos })) // 然後...以todos為資訊傳入index畫面
     .catch(error => console.log(error)) // 抓取到錯誤則顯示錯誤資訊
 })
@@ -106,3 +107,4 @@ app.post('/todos/:id/delete', (req, res) => {
 app.listen(3000, () => {
   console.log('App is running on http://localhost:3000')
 })
+
