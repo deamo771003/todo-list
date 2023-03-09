@@ -3,6 +3,8 @@ const mongoose = require('mongoose') // 載入 mongoose
 
 const bodyParser = require('body-parser')
 
+const methodOverride = require('method-override')
+
 const Todo = require('./models/todo')
 
 const exphbs = require('express-handlebars')
@@ -30,6 +32,9 @@ db.once('open', () => {
 // 用 app.use 規定每一筆請求都需要透過 body-parser 進行前置處理
 app.use(bodyParser.urlencoded({ extended: true }))
 
+// 啟用並定義methodOverride
+app.use(methodOverride('_method'))// <form>action路由後方加入?_method=XXX就可修改method屬性(HTTP預設只能POST&GET)
+
 // 啟動hbs
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' })) // app.engine('指定副檔名', 模板 ({ main通用模板檔案, extname要被渲染的副檔名 }))
 app.set('view engine', 'hbs')
@@ -38,7 +43,7 @@ app.get('/', (req, res) => {
   // take all Todo data
   Todo.find() // 抓所有資料
     .lean() // 未經處裡的乾淨資料
-    .sort({ _id: 'asc' }) // 資料排序功能，使用_id來排序
+    .sort({ _id: 'asc' }) // mongoose資料排序功能，使用_id順向排序
     .then(todos => res.render('index', { todos })) // 然後...以todos為資訊傳入index畫面
     .catch(error => console.log(error)) // 抓取到錯誤則顯示錯誤資訊
 })
@@ -75,7 +80,7 @@ app.get('/todos/:id/edit', (req, res) => {
 })
 
 // edit 存取使用者資料
-app.post('/todos/:id/edit', (req, res) => {
+app.put('/todos/:id', (req, res) => {
   const id = req.params.id
   // const name = req.body.name // name = 使用者key的name ??
   // const isDone = req.body.isDone
@@ -96,7 +101,7 @@ app.post('/todos/:id/edit', (req, res) => {
 })
 
 // delete
-app.post('/todos/:id/delete', (req, res) => {
+app.delete('/todos/:id', (req, res) => {
   const id = req.params.id
   return Todo.findById(id)
     .then(todo => todo.remove())

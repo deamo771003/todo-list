@@ -11,7 +11,7 @@
     {{!-- 修改 依樣使用__id是Mongoose內的獨立流水IDid抓取 --}}
     <a href="./todos/{{ this._id }}/edit">edit</a>
     {{!-- 刪除 delete --}}
-    <form action="./todos/{{ this._id }}/delete" method="POST" style="display: inline;">
+    <form action="./todos/{{ this._id }}?_method=DELETE" method="POST" style="display: inline;">
       <button type="submit">delete</button>
     </form>
   </li>
