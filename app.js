@@ -7,6 +7,8 @@ const methodOverride = require('method-override')
 
 const Todo = require('./models/todo')
 
+const routes = require('./routes')
+
 const exphbs = require('express-handlebars')
 // const todo = require('./models/todo') // 多key，註解後測試完整性
 const { request } = require('express')
@@ -39,14 +41,15 @@ app.use(methodOverride('_method'))// <form>action路由後方加入?_method=XXX�
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' })) // app.engine('指定副檔名', 模板 ({ main通用模板檔案, extname要被渲染的副檔名 }))
 app.set('view engine', 'hbs')
 
-app.get('/', (req, res) => {
-  // take all Todo data
-  Todo.find() // 抓所有資料
-    .lean() // 未經處裡的乾淨資料
-    .sort({ _id: 'asc' }) // mongoose資料排序功能，使用_id順向排序
-    .then(todos => res.render('index', { todos })) // 然後...以todos為資訊傳入index畫面
-    .catch(error => console.log(error)) // 抓取到錯誤則顯示錯誤資訊
-})
+app.use(routes)
+// app.get('/', (req, res) => {
+//   // take all Todo data
+//   Todo.find() // 抓所有資料
+//     .lean() // 未經處裡的乾淨資料
+//     .sort({ _id: 'asc' }) // mongoose資料排序功能，使用_id順向排序
+//     .then(todos => res.render('index', { todos })) // 然後...以todos為資訊傳入index畫面
+//     .catch(error => console.log(error)) // 抓取到錯誤則顯示錯誤資訊
+// })
 
 // 建立/todos/new路由
 app.get('/todos/new', (req, res) => {
