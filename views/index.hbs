@@ -1,19 +1,26 @@
 {{!-- 超連結 --}}
-<a href="./todos/new">Create</a>
-<ul>
+<ul class="list-group">
   {{#each todos}}
-  <li>
-    <input type="checkbox" name="isDone" {{#if this.isDone}} checked {{/if}} disabled>
-    {{!-- 因這裡已用each啟動陣列迭代todos，所以下面的this.name是指todos裡的name --}}
-    {{ this.name }}
-    {{!-- 詳細資料 _id是Mongoose內的獨立流水ID --}}
-    <a href="./todos/{{ this._id }}">detail</a>
-    {{!-- 修改 依樣使用__id是Mongoose內的獨立流水IDid抓取 --}}
-    <a href="./todos/{{ this._id }}/edit">edit</a>
-    {{!-- 刪除 delete --}}
-    <form action="./todos/{{ this._id }}?_method=DELETE" method="POST" style="display: inline;">
-      <button type="submit">delete</button>
-    </form>
+  <li class="list-group-item">
+    <div class="row justify-content-between">
+      <div class="col-auto me-auto">
+        <input style="vertical-align: middle;" type="checkbox" name="isDone" {{#if this.isDone}} checked {{/if}} disabled>
+        <h4 style="display: inline; vertical-align: middle;">
+          {{!-- 因這裡已用each啟動陣列迭代todos，所以下面的this.name是指todos裡的name --}}
+          {{ this.name }}
+        </h4>
+      </div>
+      <div class="col-auto">
+        {{!-- 詳細資料 _id是Mongoose內的獨立流水ID --}}
+        <a class="btn btn-secondary" href="./todos/{{ this._id }}">detail</a>
+        {{!-- 修改 依樣使用__id是Mongoose內的獨立流水IDid抓取 --}}
+        <a class="btn btn-success" href="./todos/{{ this._id }}/edit">edit</a>
+        {{!-- 刪除 delete --}}
+        <form action="./todos/{{ this._id }}?_method=DELETE" method="POST" style="display: inline;">
+          <button class="btn btn-danger" type="submit">delete</button>
+        </form>
+      </div>
+    </div>
   </li>
   {{/each}}
 </ul>
