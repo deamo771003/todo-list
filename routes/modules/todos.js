@@ -33,7 +33,6 @@ router.get('/:id/edit', (req, res) => {
     .then(todo => res.render('edit', { todo })) // 使用detail文檔加入todo數據
     .catch(error => console.log(error))
 })
-
 // edit 存取使用者資料
 router.put('/:id', (req, res) => {
   const id = req.params.id
@@ -49,9 +48,9 @@ router.put('/:id', (req, res) => {
       //   todo.isDone = false
       // }
       todo.isDone = isDone === 'on' // 等於以上if縮寫，因為isDone === 'on'就是true
-      return todo.save() // 執行儲存
+      return todo.save() // 執行mongoose儲存功能
     })
-    .then(() => res.redirect(`/todos/${id}`)) // 以上動作結束後不用任何動作直接導向首頁 
+    .then(() => res.redirect(`/`)) // 以上動作結束後不用任何動作直接導向首頁 
     .catch(error => console.log(error)) // 以上只要有錯誤則跳錯誤訊息
 })
 

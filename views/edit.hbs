@@ -1,7 +1,11 @@
-<form action="/todos/{{ todo._id }}?_method=PUT" method="POST">
-  {{!-- 新增完成按鈕，設定為打勾框(checkbox)，name需對上todo內的資料目錄isDone，用hbs的if功能 --}}
-  <input type="checkbox" name="isDone" {{#if todo.isDone}} checked {{/if}}>
-  <input type="text" placeholder="name" name="name" value="{{ todo.name }}">
-  <button type="submit">save</button>
-  <a href="/">Back</a>
+<form action="/todos/{{ todo._id }}?_method=PUT" method="POST" style="display: inline;">
+  <div class="input-group">
+    <div class="input-group-text">
+      {{!-- 新增完成按鈕，設定為打勾框(checkbox)，name需對上todo內的資料目錄isDone，用hbs的if功能 --}}
+      <input type="checkbox" class="from-check-input mt-0" name="isDone" {{#if todo.isDone}} checked {{/if}}>
+    </div>
+    <input class="form-control" type="name" placeholder="name" name="name" value="{{ todo.name }}">
+    <button class="btn btn-success" type="submit" href="/">save</button>
+    <a class="btn btn-secondary" href="/">Back</a>
+  </div>
 </form>
