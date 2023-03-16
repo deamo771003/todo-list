@@ -5,6 +5,8 @@ const exphbs = require('express-handlebars')
 
 const routes = require('./routes')
 
+const PORT = process.env.PORT || 3000
+
 // const { request } = require('express') // ??
 
 // 加入這段 code, 僅在非正式環境時, 使用 dotenv
@@ -109,7 +111,7 @@ app.use(routes)
 //     .catch(error => console.log(error))
 // })
 
-app.listen(3000, () => {
-  console.log('App is running on http://localhost:3000')
+app.listen(PORT, () => {
+  console.log(`App is running on http://localhost:${PORT}`)
 })
 

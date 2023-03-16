@@ -3,9 +3,9 @@
   {{#each todos}}
   <li class="list-group-item">
     <div class="row justify-content-between">
-      <div class="col-auto">
-        <input style="vertical-align: middle;" type="checkbox" name="isDone" {{#if this.isDone}} checked {{/if}} disabled>
-        <h4 style="display: inline; vertical-align: middle;">
+      <div class="col-auto" style="vertical-align: middle;">
+        <input type="checkbox" name="isDone" {{#if this.isDone}} checked {{/if}} disabled>
+        <h4 style="display: inline;">
           {{!-- 因這裡已用each啟動陣列迭代todos，所以下面的this.name是指todos裡的name --}}
           {{ this.name }}
         </h4>
