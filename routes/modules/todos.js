@@ -7,14 +7,18 @@ const Todo = require('../../models/todo')
 router.get('/new', (req, res) => {
   return res.render('new')
 })
-
 // 設定一條新的路由，來接住表單資料，並且把資料送往資料庫。這個步驟就是 CRUD 裡的 Create 動作
-router.post('/', (req, res) => {
-  const name = req.body.name // 從 req.body 拿出表單裡的 name 資料
-  return Todo.create({ name }) // 存入資料庫
+router.post('/', (req, res) => { // 對應new.hbs的form/action，因此檔案名稱為todos，再搭配index的設定，故'/'就等於/todos
+  const bodyName = req.body.name // 從 req.body(使用者submit的資訊) 拿出表單裡的 name 資料
+  const todos = String(bodyName).split(',').map(todo => ({ name: todo })); // 以','分開的多筆匯入
+  return Todo.insertMany(todos) // 多筆存入資料庫
     .then(() => res.redirect('/')) // 新增完成後導回首頁
     .catch(error => console.log(error))
 })
+//   return Todo.create({ bodyName }) // 存入資料庫
+//     .then(() => res.redirect('/')) // 新增完成後導回首頁
+//     .catch(error => console.log(error))
+// })
 
 // detail 路由
 router.get('/:id', (req, res) => {

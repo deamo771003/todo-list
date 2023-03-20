@@ -5,7 +5,7 @@ const exphbs = require('express-handlebars')
 
 const routes = require('./routes')
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000 // 執行heroku給的PORT，若沒有就執行3000
 
 // const { request } = require('express') // ??
 
