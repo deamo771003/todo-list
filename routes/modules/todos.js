@@ -43,7 +43,7 @@ router.put('/:id', (req, res) => {
   // const name = req.body.name // name = 使用者key的name ??
   // const isDone = req.body.isDone
   const { name, isDone } = req.body // 解構複值，等於以上語法的縮寫
-  return Todo.findById(id) // ??
+  return Todo.findById(id)
     .then(todo => {
       todo.name = name // 覆蓋原本todo.name
       // if (isDone === 'on') {
