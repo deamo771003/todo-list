@@ -2,17 +2,17 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const exphbs = require('express-handlebars')
+const session = require('express-session')
 
 const routes = require('./routes')
 
 const PORT = process.env.PORT || 5000 // 執行heroku給的PORT，若沒有就執行3000
 
-// const { request } = require('express') // ??
-
 // 加入這段 code, 僅在非正式環境時, 使用 dotenv
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
+
 const app = express()
 
 require('./config/mongoose') // 載入mongoose資料 
@@ -37,6 +37,13 @@ app.use(methodOverride('_method'))// <form>action路由後方加入?_method=XXX�
 // 啟動hbs
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' })) // app.engine('指定副檔名', 模板 ({ main通用模板檔案, extname要被渲染的副檔名 }))
 app.set('view engine', 'hbs')
+
+// express-session
+app.use(session({
+  secret: 'ThisIsMySecret',
+  resave: false,
+  saveUninitialized: true
+}))
 
 app.use(routes)
 // 以下分至routes集中管理
