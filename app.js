@@ -3,6 +3,8 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const exphbs = require('express-handlebars')
 const session = require('express-session')
+// 載入passport設定檔，要寫在 express-session 以後
+const usePassport = require('./config/passport')
 
 const routes = require('./routes')
 
@@ -44,6 +46,9 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }))
+
+// 呼叫 Passport 函式並傳入 app，這條要寫在session之後 路由之前
+usePassport(app)
 
 app.use(routes)
 // 以下分至routes集中管理
