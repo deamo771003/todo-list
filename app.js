@@ -50,6 +50,13 @@ app.use(session({
 // 呼叫 Passport 函式並傳入 app，這條要寫在session之後 路由之前
 usePassport(app)
 
+// run routes前檢查驗證 代表這組 middleware 會作用於所有的路由
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.isAuthenticated() // 把 req.isAuthenticated() 回傳的布林值，交接給 res 使用
+  res.locals.user = req.user // 把user給res使用
+  next()
+})
+
 app.use(routes)
 // 以下分至routes集中管理
 // const Todo = require('./models/todo')
