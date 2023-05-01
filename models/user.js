@@ -13,9 +13,6 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
-  confirmPassword: {
-    type: String,
-  },
   createdAt: {
     type: Date,
     default: Date.now

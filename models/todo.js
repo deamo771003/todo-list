@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+
 const todoSchema = new Schema({
   name: {
     type: String,
@@ -8,6 +9,12 @@ const todoSchema = new Schema({
   isDone: {
     type: Boolean, // true & false
     default: false // 預設為false(沒打勾)
+  },
+  userId: { // 建立User關聯，加入User資訊
+    type: Schema.Types.ObjectId, // 資料型別為mongoose_id，與 ref 是一組設定
+    ref: 'User', // 關聯User data
+    index: true, // userID設定為索引搜尋項目增加讀取效能
+    required: true
   }
 })
 
