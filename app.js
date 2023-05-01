@@ -3,9 +3,8 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const exphbs = require('express-handlebars')
 const session = require('express-session')
-// 載入passport設定檔，要寫在 express-session 以後
-const usePassport = require('./config/passport')
-
+const usePassport = require('./config/passport') // 載入passport設定檔，要寫在 express-session 以後
+const flash = require('connect-flash')
 const routes = require('./routes')
 
 const PORT = process.env.PORT || 5000 // 執行heroku給的PORT，若沒有就執行3000
@@ -50,10 +49,15 @@ app.use(session({
 // 呼叫 Passport 函式並傳入 app，這條要寫在session之後 路由之前
 usePassport(app)
 
+// connect-flash
+app.use(flash())
+
 // run routes前檢查驗證 代表這組 middleware 會作用於所有的路由
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.isAuthenticated() // 把 req.isAuthenticated() 回傳的布林值，交接給 res 使用
   res.locals.user = req.user // 把user給res使用
+  res.locals.success_msg = req.flash('success_msg') // 設定 success_msg 訊息
+  res.locals.warning_msg = req.flash('warning_msg') // 設定 warning_msg 訊息
   next()
 })
 
