@@ -7,7 +7,7 @@ const usePassport = require('./config/passport') // 載入passport設定檔，�
 const flash = require('connect-flash')
 const routes = require('./routes')
 
-const PORT = process.env.PORT || 5000 // 執行heroku給的PORT，若沒有就執行3000
+const PORT = process.env.PORT || 5000 // 執行heroku給的PORT，若沒有就執行5000
 
 // 加入這段 code, 僅在非正式環境時, 使用 dotenv
 if (process.env.NODE_ENV !== 'production') {
@@ -41,7 +41,7 @@ app.set('view engine', 'hbs')
 
 // express-session
 app.use(session({
-  secret: 'ThisIsMySecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))

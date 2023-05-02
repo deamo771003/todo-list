@@ -38,6 +38,7 @@ router.post('/register', (req, res) => {
       return res.render('register', { errors, name, email, password, confirmPassword })
     }
 
+    // 加密 加鹽雜湊
     return bcrypt
       .genSalt(10) // 加鹽,係數10
       .then(salt => bcrypt.hash(password, salt)) // 使用者密碼加鹽後雜湊
